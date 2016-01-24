@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="CTP">
+		<Project filename="tp2 argc argv/tp2/tp2.cbp" />
+		<Project filename="tp1 hello world/helloworld/helloworld.cbp" />
+		<Project filename="tp2/tp3calc/tp3calc.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

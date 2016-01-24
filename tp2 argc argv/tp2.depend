@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1453455115 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\tp2\tp2\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1453458282 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\tp2 argc argv\main.c
+	<stdio.h>
+	<stdlib.h>
+

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1453655828 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\tpxuserinteraction\main.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
