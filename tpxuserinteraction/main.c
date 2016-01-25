@@ -91,7 +91,7 @@ void menuHomeDisplay(){
         printf ("# 1 : test user input to have numbers  #\n");
         printf( "# 2 : test user input to have ascii    #\n");
         printf ("# 3 : print geometrical form to user   #\n");
-        printf ("# 4 : speak with user                  #\n");
+        printf ("# 4 : quit                             #\n");
         printf ("########################################\n");
         printf ("\n");
         fflush(stdout);
@@ -159,6 +159,25 @@ void calculatorHomeDisplay(){
         /* Restore original attributes */
         setConsoleColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
         //textcolor(RESET, WHITE, BLACK);
+}
+
+char inputChar(){
+    int userChoise = 1;
+    char userNumber[1];
+
+    while(userChoise){
+        scanf ("%s", userNumber);
+
+            userChoise = atoi(userNumber);
+            if(userChoise == 0){
+                    return *userNumber;
+            }else{
+                userChoise = 1;
+            }
+            printf ("Please use just alpha");
+    }
+
+    return 0;
 }
 
 char mathInputChar(){
@@ -280,15 +299,17 @@ void basicEntierCalc()
         result = mathInputInt();
 
         //Print calc to see steps
-        printf("=> %d / %d = ", tempResult, result);
-
             if(operatorCalc == '+'){
+                printf("=> %d + %d = ", tempResult, result);
                 result = tempResult + result;
             }else if(operatorCalc == '-'){
+                printf("=> %d - %d = ", tempResult, result);
                 result = tempResult - result;
             }else if(operatorCalc == 'x'){
+                printf("=> %d x %d = ", tempResult, result);
                 result = tempResult * result;
             }else if(operatorCalc == '/'){
+                printf("=> %d / %d = ", tempResult, result);
                 result = tempResult / result;
             }else if(operatorCalc == 'q'){
                 calculatorHomeDisplay();
@@ -340,15 +361,17 @@ void basicRealCalc()
         result = mathInputFloat();
 
         //Print calc to see steps
-        printf("=> %f / %f = ", tempResult, result);
-
             if(operatorCalc == '+'){
+                printf("=> %d + %d = ", tempResult, result);
                 result = tempResult + result;
             }else if(operatorCalc == '-'){
+                printf("=> %d - %d = ", tempResult, result);
                 result = tempResult - result;
             }else if(operatorCalc == 'x'){
+                printf("=> %d x %d = ", tempResult, result);
                 result = tempResult * result;
             }else if(operatorCalc == '/'){
+                printf("=> %d / %d = ", tempResult, result);
                 result = tempResult / result;
             }else if(operatorCalc == 'q'){
                 calculatorHomeDisplay();
@@ -406,9 +429,85 @@ void asciiHomeDisplay(){
 }
 
 void chartoascii(){
+    int userChoise = 0;
+    char didExit = 'a';
+    while(1){
+        char c;
+
+        system("cls");
+
+        setConsoleColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+        printf ("########################################\n");
+        printf ("######  Welcome on char to ascii  ######\n");
+        printf ("########################################\n");
+        printf ("\n");
+        fflush(stdout);
+
+        printf ("########################################\n");
+        printf ("# Press char and get it to ascii       #\n");
+        printf ("# 1 : take a char                      #\n");
+        printf( "# 2 : validate                         #\n");
+        printf ("########################################\n");
+        printf ("\n");
+        fflush(stdout);
+
+        /* Restore original attributes */
+        setConsoleColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+        printf("Enter a character: ");
+        c = inputChar();
+        printf("ASCII value of %c = %d\n",c,c);
+
+        printf ("Do you want to exit? (q) :");
+        didExit = needToExit();
+        if(didExit == 'q'){
+            asciiHomeDisplay();
+            userChoise = userInputInt(3);
+            asciiHomeUse(userChoise);
+        }
+    }
 }
 
 void asciitochar(){
+    int userChoise = 0;
+    char didExit = 'a';
+    while(1){
+        int c;
+
+        system("cls");
+
+        setConsoleColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
+        printf ("########################################\n");
+        printf ("######  Welcome on ascii to char  ######\n");
+        printf ("########################################\n");
+        printf ("\n");
+        fflush(stdout);
+
+        printf ("########################################\n");
+        printf ("# Press ascii and get it to char       #\n");
+        printf ("# 1 : take a int ascii table 0 - 127   #\n");
+        printf( "# 2 : validate                         #\n");
+        printf ("########################################\n");
+        printf ("\n");
+        fflush(stdout);
+
+        /* Restore original attributes */
+        setConsoleColor(FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+
+        printf("Enter a int: ");
+        c = mathInputInt();
+        printf("Int value of %c = %d\n",c,c);
+
+        printf ("Do you want to exit? (q) :");
+        didExit = needToExit();
+        if(didExit == 'q'){
+            asciiHomeDisplay();
+            userChoise = userInputInt(3);
+            asciiHomeUse(userChoise);
+        }
+    }
 }
 
 void geoHomeDisplay(){
