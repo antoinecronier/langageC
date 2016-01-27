@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int functionRecursive(int index){
+    printf("Hello world!\n");
+    functionRecursive(index);
+}
+
 int main()
 {
     int i = 1;
@@ -44,7 +49,7 @@ int main()
     printf("Hello world!\n");
     goto labelgoto;*/
 
-
+    /*functionRecursive(10);*/
 
     return 0;
 }
