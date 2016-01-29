@@ -17,7 +17,6 @@ int main()
 
     /*for(i=0; i != -4; i++){
         printf("Hello world!\n");
-        i--;
     }*/
 
     /*for(;;){
@@ -49,7 +48,7 @@ int main()
     printf("Hello world!\n");
     goto labelgoto;*/
 
-    /*functionRecursive(10);*/
+    functionRecursive(10);
 
     return 0;
 }

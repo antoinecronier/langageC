@@ -49,6 +49,7 @@ void menuHomeUse(int choise){
             geoHomeUse(userChoise);
         break;
         case 4:
+            exit(0);
         break;
         default:
         break;
