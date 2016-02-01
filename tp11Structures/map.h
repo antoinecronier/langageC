@@ -3,13 +3,13 @@
 #include "mob.h"
 #include "player.h"
 
-typedef union mapGame{
+typedef struct mapGame{
     int arrayGame[0][0];
     int mapHeight;
     int mapWidth;
     mob mobs[0];
     int countMobs;
     player myPlayer;
-} mapGame;
+};
 
 #endif // MAP_H_INCLUDED

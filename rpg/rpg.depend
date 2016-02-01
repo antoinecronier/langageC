@@ -1,0 +1,37 @@
+# depslib dependency file v1.0
+1454343374 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\main.c
+	<stdio.h>
+	<stdlib.h>
+	"gamemap.h"
+
+1454342090 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\mob.c
+	<stdio.h>
+	<stdlib.h>
+	"player.h"
+
+1454323838 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\position.c
+	<stdio.h>
+	<stdlib.h>
+	"position.h"
+
+1454339364 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\player.c
+	<stdio.h>
+	<stdlib.h>
+	"player.h"
+
+1454343208 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\gamemap.c
+	<stdio.h>
+	<stdlib.h>
+	"gamemap.h"
+
+1454323838 c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\position.h
+
+1454334947 c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\mob.h
+	"position.h"
+
+1454324113 c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\player.h
+	"mob.h"
+
+1454338739 c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\rpg\gamemap.h
+	"player.h"
+

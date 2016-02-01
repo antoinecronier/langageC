@@ -3,8 +3,8 @@
 
 #define NB_PLAYER 2
 
-#define PLATEAU_HEIGHT 40
-#define PLATEAU_WIDTH 60
+#define PLATEAU_HEIGHT 18
+#define PLATEAU_WIDTH 24
 
 #define CORVETTE_ID 1
 #define CORVETTE_WIDTH 1
@@ -23,20 +23,19 @@
 #define PORTE_AVION_NB 1
 
 int doRand(int startVal, int endVal){
+    srand(time(0));
     return (rand() % (endVal - startVal -1) + startVal);
 }
 
 int setNavire(int x, int y, int size, int id, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
     int i = 0;
-    int j = 0;
 
     //See text position
     printf("setNavire x=%d y=%d size=%d id=%d\n",x,y,size,id);
     for(i=0;i<size;i++){
-        for(j=0;j<size;j++){
-            plateau[x+i][y+j] = id;
-        }
+        plateau[x+i][y] = id;
     }
+
     printf("\n");
 }
 
@@ -45,18 +44,13 @@ int setNavire(int x, int y, int size, int id, int plateau[PLATEAU_HEIGHT][PLATEA
 int testCase(int x, int y, int size, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
     //boucle  to see dimension
     int i = 0;
-    int j = 0;
     int flagOk = 1;
 
-    //Test boat enter in map with is width (multidirectionnal)
+    //Test boat enter in map with is width
     if((x - size >= 0) && (y - size >= 0) && (x + size < PLATEAU_WIDTH) && (y + size < PLATEAU_HEIGHT)){
         for(i=0;i<size-1;i++){
-            for(j=0;j<size-1;j++){
-                //If we throw in an issue we set value to 0 and have to retry
-                //This will test both coordinates
-                if(plateau[x+i][y+j] != 0){
-                    flagOk = 0;
-                }
+            if(plateau[x+i][y] != 0){
+                flagOk = 0;
             }
         }
     }else{
@@ -177,12 +171,17 @@ int printTableau(int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
     }
 }
 
+void setPlateau(int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
+    purgeTableau(plateau);
+    setNavires(NB_PLAYER,plateau);
+    printTableau(plateau);
+}
+
 int main()
 {
     int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH];
 
-    purgeTableau(plateau);
-    setNavires(NB_PLAYER,plateau);
-    printTableau(plateau);
+    setPlateau(plateau);
+
     return 0;
 }

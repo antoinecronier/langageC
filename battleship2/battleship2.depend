@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1454075127 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\battleship2\main.c
+	<stdio.h>
+	<stdlib.h>
+
