@@ -26,6 +26,13 @@ int doRand(int startVal, int endVal){
     return (rand() % (endVal - startVal -1) + startVal);
 }
 
+int userChoise(){
+    int i;
+    printf("PLease select a value for coordinate\n");
+    scanf("%d",i);
+    return i;
+}
+
 int setNavire(int x, int y, int size, int id, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
     int i = 0;
     int j = 0;
@@ -134,10 +141,17 @@ int setPorteAvion(int nbPorteAvion, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
 
     for(i=0;i<nbPorteAvion;i++){
         while(flag){
-            y = doRand(0,PLATEAU_HEIGHT);
-            x = doRand(0,PLATEAU_WIDTH);
+            //Allow user to select coordinate
+            y = userChoise();
+            x = userChoise();
+
+            //Test if boat can go in the array of cells
             if(testCase(x,y,PORTE_AVION_WIDTH,plateau) == 0){
+
+                //Set realy the boat in the array
                 setNavire(x,y,PORTE_AVION_WIDTH,PORTE_AVION_ID,plateau);
+
+                //If all ok return
                 flag = 0;
             }
         }
@@ -145,9 +159,16 @@ int setPorteAvion(int nbPorteAvion, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
     }
 }
 
-int setNavires(int nbPlayer, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
+int setNavires(int nbPlayerHumain, int nbPlayerIA, int plateau[PLATEAU_HEIGHT][PLATEAU_WIDTH]){
     int i = 0;
-    for(i=0;i<nbPlayer;i++){
+    for(i=0;i<nbPlayerHumain;i++){
+        printf("Joueur %d :\n",i+1);
+        setPorteAvion(PORTE_AVION_NB,plateau);
+        setCroiseur(CROISEUR_NB,plateau);
+        setDestroyer(DESTROYER_NB,plateau);
+        setCorvette(CORVETTE_NB,plateau);
+    }
+    for(i=0;i<nbPlayerIA;i++){
         printf("Joueur %d :\n",i+1);
         setPorteAvion(PORTE_AVION_NB,plateau);
         setCroiseur(CROISEUR_NB,plateau);
@@ -186,3 +207,20 @@ int main()
     printTableau(plateau);
     return 0;
 }
+/*
+//region create dynamic array
+int** x;
+
+x = malloc(dimension1_max * sizeof(int*));
+for (int i = 0; i < dimension1_max; i++) {
+  x[i] = malloc(dimension2_max * sizeof(int));
+}
+
+[...]
+
+for (int i = 0; i < dimension1_max; i++) {
+  free(x[i]);
+}
+free(x);
+//endregion
+*/

@@ -20,7 +20,7 @@ void doStuffP2(int* value){
 
 int main()
 {
-    /*int intval = 10;
+    int intval = 10;
     int* pintval = intval;
 
     char charval = 'a';
@@ -54,7 +54,7 @@ int main()
     doStuffP1(&intval);
     printf("Outside doStuffP1 value = %d\n", intval);
     doStuffP2(&intval);
-    printf("Outside doStuffP2 value = %d\n", intval);*/
+    printf("Outside doStuffP2 value = %d\n", intval);
 
     /*int i = 0;
     int tab1[5] = {1,2,3,4,5};
@@ -77,7 +77,7 @@ int main()
         }
     }*/
 
-    /*aliasedInt i,j,k = 0;
+    aliasedInt i,j,k = 0;
     aliasedInt tab1[5][5][5];
     int** pTab = tab1;
 
@@ -89,7 +89,7 @@ int main()
                 pTab++;
             }
         }
-    }*/
+    }
 
     return 0;
 }

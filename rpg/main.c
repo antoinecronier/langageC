@@ -10,23 +10,23 @@ void playGame();
 int main()
 {
     position* mypos = position_ctor(0,0);
-    mob* mymob = mob_ctor("joueur1",49,100,1,10,mypos);
+    mob* mymob = mob_ctor("joueur1",49,6,1,10,mypos);
     player* myplayer = player_ctor(1,4,mymob);
 
     position* mob1pos = position_ctor(1,1);
     mob* mob1 = mob_ctor("mob1",50,1,0,10,mob1pos);
 
     position* mob2pos = position_ctor(3,1);
-    mob* mob2 = mob_ctor("mob2",50,1,0,10,mob2pos);
+    mob* mob2 = mob_ctor("mob2",51,1,0,10,mob2pos);
 
     position* mob3pos = position_ctor(1,4);
-    mob* mob3 = mob_ctor("mob3",50,1,0,10,mob3pos);
+    mob* mob3 = mob_ctor("mob3",52,1,0,10,mob3pos);
 
     position* mob4pos = position_ctor(4,4);
-    mob* mob4 = mob_ctor("mob4",50,1,0,10,mob4pos);
+    mob* mob4 = mob_ctor("mob4",53,1,0,10,mob4pos);
 
     position* mob5pos = position_ctor(6,2);
-    mob* mob5 = mob_ctor("mob5",50,1,0,10,mob5pos);
+    mob* mob5 = mob_ctor("mob5",54,1,0,10,mob5pos);
 
     //Battle use
     /*showMobStats(myplayer->playerMob);
