@@ -25,15 +25,15 @@ int writeToFile1(){
 
 struct student
 {
-char name[80];
-int mark;
+    char name[80];
+    int mark;
 };
 
 int writeToFile2(){
     struct student students[STUDENT_NB];
     FILE *fptr;
     int i;
-    fptr=fopen("./file.txt","wb");
+    fptr=fopen("./file.txt","w+");
     for(i=0;i<STUDENT_NB;++i)
     {
         fflush(stdin);
@@ -78,8 +78,8 @@ int readFromFile2 ()
 }
 
 int main(){
-    char name;
-    //writeToFile2();
-    readFromFile2();
+    char* name;
+    writeToFile2();
+    readFromFile1();
     scanf("%s",name);
 }

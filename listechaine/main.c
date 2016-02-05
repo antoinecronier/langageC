@@ -337,6 +337,50 @@ Dlist *dlist_find_all(Dlist *p_list, int data)
     return ret;
 }
 
+//region saving/loading
+//Write the whole list in a file
+void writeToFile(Dlist *p_list){
+    FILE *fptr;
+    fptr=fopen("./list.txt","w+");
+    if (p_list != NULL)
+    {
+        struct node *p_temp = p_list->p_head;
+        while (p_temp != NULL)
+        {
+            printf("%d -> ", p_temp->data);
+            fprintf(fptr,"%d\n",p_temp->data);
+            p_temp = p_temp->p_next;
+        }
+    }
+    fclose(fptr);
+}
+
+void readFromFile(){
+    FILE * fp;
+    int page_size=4;
+    size_t read=0;
+    int * buffer = (int *)malloc((page_size+1)*sizeof(int));
+    fp = fopen("list.txt", "rb"); //open the file for binary input
+
+    //loop through the file reading a page at a time
+    do
+    {
+        read = fread(buffer,sizeof(int),page_size, fp); //issue the read call
+
+        if (read > 0) //if return value is > 0
+        {
+            buffer[page_size]='\0';
+            printf("%s\n",buffer);
+        }
+
+        }
+    while(read == page_size); //end when a read returned fewer items
+
+    fclose(fp);
+}
+//endregion
+
+
 
 int main()
 {
@@ -404,5 +448,6 @@ int main()
     Dlist *findedall = dlist_find_all(myList, 42);
     dlist_display(findedall);
 
-
+    writeToFile(myList);
+    readFromFile();
 }
