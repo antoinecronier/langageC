@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define RW_STRUCT int
+
 struct node
 {
     int data;
     struct node *p_next;
     struct node *p_prev;
-};
+} Node;
 
 typedef struct dlist
 {
@@ -342,41 +344,47 @@ Dlist *dlist_find_all(Dlist *p_list, int data)
 void writeToFile(Dlist *p_list){
     FILE *fptr;
     fptr=fopen("./list.txt","w+");
+
+    RW_STRUCT* data;
     if (p_list != NULL)
     {
         struct node *p_temp = p_list->p_head;
         while (p_temp != NULL)
         {
-            printf("%d -> ", p_temp->data);
-            fprintf(fptr,"%d\n",p_temp->data);
+            data = p_temp->data;
+            printf("%d -> ", data);
+            //fprintf(fptr,"%d\n",p_temp->data);
+            fwrite(&data,sizeof(data),1,fptr);
             p_temp = p_temp->p_next;
         }
+        printf("\n");
     }
     fclose(fptr);
 }
 
-void readFromFile(){
-    FILE * fp;
-    int page_size=4;
-    size_t read=0;
-    int * buffer = (int *)malloc((page_size+1)*sizeof(int));
-    fp = fopen("list.txt", "rb"); //open the file for binary input
+Dlist* readFromFile(){
+    Dlist *p_list = dlist_new();
+    RW_STRUCT data[1];
+    FILE *fptr;
 
-    //loop through the file reading a page at a time
-    do
-    {
-        read = fread(buffer,sizeof(int),page_size, fp); //issue the read call
+    fptr=fopen("./list.txt","rb");
 
-        if (read > 0) //if return value is > 0
-        {
-            buffer[page_size]='\0';
-            printf("%s\n",buffer);
+    if (fptr) {
+        /* File was opened successfully. */
+
+        /* Attempt to read element one by one */
+        while (fread(data,sizeof(RW_STRUCT),1,fptr) == 1) {
+
+            printf("%d -> ", data[0]);
+
+            dlist_append(p_list, data[0]);
         }
+        printf("\n");
+    }
 
-        }
-    while(read == page_size); //end when a read returned fewer items
+    fclose(fptr);
 
-    fclose(fp);
+    return p_list;
 }
 //endregion
 
@@ -448,6 +456,10 @@ int main()
     Dlist *findedall = dlist_find_all(myList, 42);
     dlist_display(findedall);
 
+    printf("Start write\n");
     writeToFile(myList);
-    readFromFile();
+    printf("Start read\n");
+    Dlist *newList = readFromFile();
+    printf("Print extracted list\n");
+    dlist_display(newList);
 }
