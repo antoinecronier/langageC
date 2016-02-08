@@ -1,11 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define RW_STRUCT int
+#define RW_STRUCT struct student
+struct student
+{
+    int id;
+    char* name;
+    int mark;
+};
+
+struct student* Student_ctor(int id, char* name, int mark) {
+  struct student* p = malloc(sizeof(struct student));
+  p->id = id;
+  p->name = name;
+  p->mark = mark;
+  return p;
+}
 
 struct node
 {
-    int data;
+    RW_STRUCT data;
     struct node *p_next;
     struct node *p_prev;
 } Node;
@@ -31,7 +45,7 @@ Dlist *dlist_new(void)
 }
 
 //Add element at the end of the list
-Dlist *dlist_append(Dlist *p_list, int data)
+Dlist *dlist_append(Dlist *p_list, RW_STRUCT data)
 {
     if (p_list != NULL) /* On vérifie si notre liste a été allouée */
     {
@@ -59,7 +73,7 @@ Dlist *dlist_append(Dlist *p_list, int data)
 }
 
 //Add element at start of the list
-Dlist *dlist_prepend(Dlist *p_list, int data)
+Dlist *dlist_prepend(Dlist *p_list, RW_STRUCT data)
 {
     if (p_list != NULL)
     {
@@ -89,7 +103,7 @@ Dlist *dlist_prepend(Dlist *p_list, int data)
 //Insert an element at the position choice
 //Warning: position have to start to 1 and end to the current number of items
 //Warning: use only if you already have an item in the list
-Dlist *dlist_insert(Dlist *p_list, int data, int position)
+Dlist *dlist_insert(Dlist *p_list, RW_STRUCT data, int position)
 {
     if (p_list != NULL)
     {
@@ -164,7 +178,7 @@ void dlist_display(Dlist *p_list)
 }
 
 //Remove the first item regarding the data parameter
-Dlist *dlist_remove(Dlist *p_list, int data)
+Dlist *dlist_remove(Dlist *p_list, RW_STRUCT data)
 {
     if (p_list != NULL)
     {
@@ -172,7 +186,7 @@ Dlist *dlist_remove(Dlist *p_list, int data)
         int found = 0;
         while (p_temp != NULL && !found)
         {
-            if (p_temp->data == data)
+            if (&p_temp->data == &data)
             {
                 if (p_temp->p_next == NULL)
                 {
@@ -210,7 +224,7 @@ Dlist *dlist_remove_all(Dlist *p_list, int data)
         struct node *p_temp = p_list->p_head;
         while (p_temp != NULL)
         {
-            if (p_temp->data == data)
+            if (&p_temp->data == &data)
             {
                 struct node *p_del = p_temp;
                 p_temp = p_temp->p_next;
@@ -292,7 +306,7 @@ size_t dlist_length(Dlist *p_list)
 }
 
 //Return choosen item to a new list
-Dlist *dlist_find(Dlist *p_list, int data)
+Dlist *dlist_find(Dlist *p_list, RW_STRUCT data)
 {
     Dlist *ret = NULL;
     if (p_list != NULL)
@@ -301,7 +315,7 @@ Dlist *dlist_find(Dlist *p_list, int data)
         int found = 0;
         while (p_temp != NULL && !found)
         {
-            if (p_temp->data == data)
+            if (&p_temp->data == &data)
             {
                 ret = dlist_new();
                 ret = dlist_append(ret, data);
@@ -317,7 +331,7 @@ Dlist *dlist_find(Dlist *p_list, int data)
 }
 
 //Return all choosen items to a new list
-Dlist *dlist_find_all(Dlist *p_list, int data)
+Dlist *dlist_find_all(Dlist *p_list, RW_STRUCT data)
 {
     Dlist *ret = NULL;
     if (p_list != NULL)
@@ -325,7 +339,7 @@ Dlist *dlist_find_all(Dlist *p_list, int data)
         struct node *p_temp = p_list->p_head;
         while (p_temp != NULL)
         {
-            if (p_temp->data == data)
+            if (&p_temp->data == &data)
             {
                 if (ret == NULL)
                 {
@@ -351,8 +365,8 @@ void writeToFile(Dlist *p_list){
         struct node *p_temp = p_list->p_head;
         while (p_temp != NULL)
         {
-            data = p_temp->data;
-            printf("%d -> ", data);
+            data = &p_temp->data;
+            printf("%d -> ", *data);
             //fprintf(fptr,"%d\n",p_temp->data);
             fwrite(&data,sizeof(data),1,fptr);
             p_temp = p_temp->p_next;
@@ -393,30 +407,33 @@ Dlist* readFromFile(){
 int main()
 {
     Dlist* myList = dlist_new();
-    dlist_append(myList,2);
-    dlist_append(myList,9);
-    dlist_append(myList,101);
+
+    RW_STRUCT myItem = *Student_ctor(1,"roger",10);
+
+    dlist_append(myList,myItem);
+    dlist_append(myList,*Student_ctor(2,"ivan",12));
+    dlist_append(myList,*Student_ctor(3,"igor",6));
     printf("List size :%d\n",dlist_length(myList));
     dlist_display(myList);
 
-    dlist_insert(myList,42,1);
+    dlist_insert(myList,*Student_ctor(4,"ivon",16),1);
     dlist_display(myList);
 
-    dlist_insert(myList,32,4);
+    /*dlist_insert(myList,32,4);
     dlist_display(myList);
 
     dlist_insert(myList,22,1);
     dlist_display(myList);
 
     dlist_insert(myList,42,4);
-    dlist_display(myList);
+    dlist_display(myList);*/
 
     printf("List size :%d\n",dlist_length(myList));
 
     /*dlist_delete(myList);
     dlist_display(myList);*/
 
-    dlist_append(myList,101);
+    /*dlist_append(myList,101);
     dlist_append(myList,102);
     dlist_display(myList);
 
@@ -438,14 +455,14 @@ int main()
     dlist_append(myList,42);
     dlist_display(myList);
 
-    printf("List size :%d\n",dlist_length(myList));
+    printf("List size :%d\n",dlist_length(myList));*/
 
     /*dlist_remove_all(myList,42);
     dlist_display(myList);
 
     printf("List size :%d\n",dlist_length(myList));*/
 
-    dlist_remove_id(myList, 1);
+    /*dlist_remove_id(myList, 1);
     dlist_display(myList);
 
     printf("List size :%d\n",dlist_length(myList));
@@ -454,7 +471,13 @@ int main()
     dlist_display(finded);
 
     Dlist *findedall = dlist_find_all(myList, 42);
-    dlist_display(findedall);
+    dlist_display(findedall);*/
+
+    //Display head item
+    struct student* retrieveItem = &myList->p_head->data;
+
+    printf("%d\n",retrieveItem);
+    printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
 
     printf("Start write\n");
     writeToFile(myList);
@@ -462,4 +485,10 @@ int main()
     Dlist *newList = readFromFile();
     printf("Print extracted list\n");
     dlist_display(newList);
+
+    //Display head item
+    retrieveItem = &newList->p_head->data;
+
+    printf("%d\n",retrieveItem);
+    printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
 }
