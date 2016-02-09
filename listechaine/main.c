@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #define RW_STRUCT struct student
+#define STRUCT_ATTRIBUTS data->id,data->name,data->mark
 
 struct student
 {
@@ -33,9 +34,9 @@ typedef struct dlist
 } Dlist;
 
 //Allow to display correct info of list items
-void printf_struct(RW_STRUCT* item)
+void printf_struct(RW_STRUCT* data)
 {
-    printf("%d %s %d\n",item->id, item->name, item->mark);
+    printf("%d %s %d\n",STRUCT_ATTRIBUTS);
 }
 
 //Create a new list
@@ -381,6 +382,7 @@ void writeToFile(Dlist *p_list){
     fclose(fptr);
 }
 
+//Read a list of structure to display it
 Dlist* readFromFile(){
     Dlist *p_list = dlist_new();
     RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
@@ -393,7 +395,7 @@ Dlist* readFromFile(){
 
         /* Attempt to read element one by one */
         while (fread(data,sizeof(RW_STRUCT),1,fptr) == 1) {
-            dlist_append(p_list, *Student_ctor(data->id,data->name,data->mark));
+            dlist_append(p_list, *Student_ctor(STRUCT_ATTRIBUTS));
         }
         printf("\n");
     }
