@@ -4,19 +4,12 @@
 
 #define RW_STRUCT struct student
 #define STRUCT_ATTRIBUTS data->id,data->name,data->mark
-#define LIST_STRUCT Dlist
-#define LIST_STRUCT_LOWER dlist
-#define STRUCT_FILE "./list.txt"
+#define LIST_STRUCT Dlist2
+#define LIST_STRUCT_LOWER dlist2
+#define STRUCT_FILE "./list2.txt"
 
-struct student
-{
-    int id;
-    char* name;
-    int mark;
-};
-
-struct student* Student_ctor(int id, char* name, int mark) {
-  struct student* p = malloc(sizeof(struct student));
+struct student2* Student_ctor(int id, char* name, int mark) {
+  struct student2* p = malloc(sizeof(struct student2));
   p->id = id;
   p->name = name;
   p->mark = mark;
@@ -30,17 +23,44 @@ struct node
     struct node *p_prev;
 } Node;
 
-typedef struct LIST_STRUCT_LOWER
-{
-    size_t length;
-    struct node *p_tail;
-    struct node *p_head;
-} LIST_STRUCT;
-
 //Allow to display correct info of list items
 void LIST_STRUCT_LOWER_printf_struct(RW_STRUCT* data)
 {
     printf("%d %s %d\n",STRUCT_ATTRIBUTS);
+}
+
+void LIST_STRUCT_LOWER_display_list_ids(int *values)
+{
+    while(values != NULL){
+        printf("%d", *values);
+        values++;
+    }
+}
+
+//Return all ids of items
+int* LIST_STRUCT_LOWER_get_list_ids(LIST_STRUCT *p_list)
+{
+    if (p_list != NULL)
+    {
+        size_t length = LIST_STRUCT_LOWER_length(p_list);
+        int values[length+1];
+        int i;
+        RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
+
+        struct node *p_temp = p_list->p_head;
+        for (i=0;i<length != NULL; i++)
+        {
+            data = &p_temp->data;
+            values[i] = data->id;
+            fflush(stdout);
+            p_temp = p_temp->p_next;
+        }
+
+        values[i+1] = NULL;
+
+        return values;
+    }
+    return NULL;
 }
 
 //Create a new list
@@ -365,46 +385,9 @@ LIST_STRUCT *LIST_STRUCT_LOWER_find_all(LIST_STRUCT *p_list, RW_STRUCT data)
     return ret;
 }
 
-//Print all ids
-void LIST_STRUCT_LOWER_display_list_ids(int *values)
-{
-    while(*values != NULL){
-        printf("%d ", *values);
-        values++;
-    }
-    printf("\n");
-}
-
-//Return all ids of items
-int* LIST_STRUCT_LOWER_get_list_ids(LIST_STRUCT *p_list)
-{
-    if (p_list != NULL)
-    {
-        size_t length = LIST_STRUCT_LOWER_length(p_list);
-        int* values = malloc(sizeof(int)*length);
-        int i = 0;
-        RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
-
-        struct node *p_temp = p_list->p_head;
-        while (p_temp != NULL)
-        {
-            data = &p_temp->data;
-            printf("%d ",data->id);
-            values[i] = data->id;
-            fflush(stdout);
-            i++;
-            p_temp = p_temp->p_next;
-        }
-        printf("\n");
-        values[i] = NULL;
-        return values;
-    }
-    return NULL;
-}
-
 //region saving/loading
 //Write the whole list in a file
-void LIST_STRUCT_LOWER_writeToFile(LIST_STRUCT *p_list){
+void LIST_STRUCT_LOWERwriteToFile(LIST_STRUCT *p_list){
     FILE *fptr;
     fptr=fopen(STRUCT_FILE,"w+");
 
@@ -424,7 +407,7 @@ void LIST_STRUCT_LOWER_writeToFile(LIST_STRUCT *p_list){
 }
 
 //Read a list of structure to display it
-LIST_STRUCT* LIST_STRUCT_LOWER_readFromFile(){
+LIST_STRUCT* LIST_STRUCT_LOWERreadFromFile(){
     LIST_STRUCT *p_list = LIST_STRUCT_LOWER_new();
     RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
     FILE *fptr;
@@ -446,35 +429,3 @@ LIST_STRUCT* LIST_STRUCT_LOWER_readFromFile(){
     return p_list;
 }
 //endregion
-
-
-
-int main()
-{
-    LIST_STRUCT* myList = LIST_STRUCT_LOWER_new();
-
-    //Create list items
-    RW_STRUCT myItem = *Student_ctor(1,"roger",10);
-    LIST_STRUCT_LOWER_append(myList,myItem);
-
-    LIST_STRUCT_LOWER_append(myList,*Student_ctor(2,"ivan",12));
-    LIST_STRUCT_LOWER_append(myList,*Student_ctor(3,"igor",6));
-    LIST_STRUCT_LOWER_insert(myList,*Student_ctor(4,"ivon",16),1);
-    LIST_STRUCT_LOWER_display(myList);
-
-    printf("List size :%d\n",LIST_STRUCT_LOWER_length(myList));
-
-    //Write Read
-    LIST_STRUCT_LOWER_writeToFile(myList);
-    LIST_STRUCT *newList = LIST_STRUCT_LOWER_readFromFile();
-    LIST_STRUCT_LOWER_display(newList);
-
-    //Display head item
-    RW_STRUCT* retrieveItem = &newList->p_head->data;
-
-    printf("Item pointer value : %d\n",retrieveItem);
-    printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
-
-    LIST_STRUCT_LOWER_display_list_ids(LIST_STRUCT_LOWER_get_list_ids(newList));
-    //Dlist2* test = dlist2_new();
-}
