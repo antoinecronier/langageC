@@ -3,6 +3,8 @@
 
 #define RW_STRUCT struct student
 #define STRUCT_ATTRIBUTS data->id,data->name,data->mark
+#define LIST_STRUCT Dlist
+#define LIST_STRUCT_LOWER dlist
 
 struct student
 {
@@ -26,12 +28,12 @@ struct node
     struct node *p_prev;
 } Node;
 
-typedef struct dlist
+typedef struct LIST_STRUCT_LOWER
 {
     size_t length;
     struct node *p_tail;
     struct node *p_head;
-} Dlist;
+} LIST_STRUCT;
 
 //Allow to display correct info of list items
 void printf_struct(RW_STRUCT* data)
@@ -39,10 +41,14 @@ void printf_struct(RW_STRUCT* data)
     printf("%d %s %d\n",STRUCT_ATTRIBUTS);
 }
 
-//Create a new list
-Dlist *dlist_new(void)
+int* display_list_ids(LIST_STRUCT *p_list)
 {
-    Dlist *p_new = malloc(sizeof *p_new);
+}
+
+//Create a new list
+LIST_STRUCT *LIST_STRUCT_LOWER_new(void)
+{
+    LIST_STRUCT *p_new = malloc(sizeof *p_new);
     if (p_new != NULL)
     {
         p_new->length = 0;
@@ -53,7 +59,7 @@ Dlist *dlist_new(void)
 }
 
 //Add element at the end of the list
-Dlist *dlist_append(Dlist *p_list, RW_STRUCT data)
+LIST_STRUCT *LIST_STRUCT_LOWER_append(LIST_STRUCT *p_list, RW_STRUCT data)
 {
     if (p_list != NULL) /* On vérifie si notre liste a été allouée */
     {
@@ -81,7 +87,7 @@ Dlist *dlist_append(Dlist *p_list, RW_STRUCT data)
 }
 
 //Add element at start of the list
-Dlist *dlist_prepend(Dlist *p_list, RW_STRUCT data)
+LIST_STRUCT *LIST_STRUCT_LOWER_prepend(LIST_STRUCT *p_list, RW_STRUCT data)
 {
     if (p_list != NULL)
     {
@@ -111,7 +117,7 @@ Dlist *dlist_prepend(Dlist *p_list, RW_STRUCT data)
 //Insert an element at the position choice
 //Warning: position have to start to 1 and end to the current number of items
 //Warning: use only if you already have an item in the list
-Dlist *dlist_insert(Dlist *p_list, RW_STRUCT data, int position)
+LIST_STRUCT *LIST_STRUCT_LOWER_insert(LIST_STRUCT *p_list, RW_STRUCT data, int position)
 {
     if (p_list != NULL)
     {
@@ -123,11 +129,11 @@ Dlist *dlist_insert(Dlist *p_list, RW_STRUCT data, int position)
             {
                 if (p_temp->p_next == NULL)
                 {
-                    p_list = dlist_append(p_list, data);
+                    p_list = LIST_STRUCT_LOWER_append(p_list, data);
                 }
                 else if (p_temp->p_prev == NULL)
                 {
-                    p_list = dlist_prepend(p_list, data);
+                    p_list = LIST_STRUCT_LOWER_prepend(p_list, data);
                 }
                 else
                 {
@@ -154,7 +160,7 @@ Dlist *dlist_insert(Dlist *p_list, RW_STRUCT data, int position)
 }
 
 //This will unallocate the entire list this cannot be access after
-void dlist_delete(Dlist **p_list)
+void LIST_STRUCT_LOWER_delete(LIST_STRUCT **p_list)
 {
     if (*p_list != NULL)
     {
@@ -170,7 +176,7 @@ void dlist_delete(Dlist **p_list)
 }
 
 //This display the list
-void dlist_display(Dlist *p_list)
+void LIST_STRUCT_LOWER_display(LIST_STRUCT *p_list)
 {
     if (p_list != NULL)
     {
@@ -186,7 +192,7 @@ void dlist_display(Dlist *p_list)
 }
 
 //Remove the first item regarding the data parameter
-Dlist *dlist_remove(Dlist *p_list, RW_STRUCT data)
+LIST_STRUCT *LIST_STRUCT_LOWER_remove(LIST_STRUCT *p_list, RW_STRUCT data)
 {
     if (p_list != NULL)
     {
@@ -225,7 +231,7 @@ Dlist *dlist_remove(Dlist *p_list, RW_STRUCT data)
 }
 
 //Remove all items regarding the data parameter
-Dlist *dlist_remove_all(Dlist *p_list, int data)
+LIST_STRUCT *LIST_STRUCT_LOWER_remove_all(LIST_STRUCT *p_list, int data)
 {
     if (p_list != NULL)
     {
@@ -264,7 +270,7 @@ Dlist *dlist_remove_all(Dlist *p_list, int data)
 }
 
 //Remove item with selected position
-Dlist *dlist_remove_id(Dlist *p_list, int position)
+LIST_STRUCT *LIST_STRUCT_LOWER_remove_id(LIST_STRUCT *p_list, int position)
 {
     if (p_list != NULL)
     {
@@ -303,7 +309,7 @@ Dlist *dlist_remove_id(Dlist *p_list, int position)
 }
 
 //Return current list size
-size_t dlist_length(Dlist *p_list)
+size_t LIST_STRUCT_LOWER_length(LIST_STRUCT *p_list)
 {
     size_t ret = 0;
     if (p_list != NULL)
@@ -314,9 +320,9 @@ size_t dlist_length(Dlist *p_list)
 }
 
 //Return choosen item to a new list
-Dlist *dlist_find(Dlist *p_list, RW_STRUCT data)
+LIST_STRUCT *LIST_STRUCT_LOWER_find(LIST_STRUCT *p_list, RW_STRUCT data)
 {
-    Dlist *ret = NULL;
+    LIST_STRUCT *ret = NULL;
     if (p_list != NULL)
     {
         struct node *p_temp = p_list->p_head;
@@ -325,8 +331,8 @@ Dlist *dlist_find(Dlist *p_list, RW_STRUCT data)
         {
             if (&p_temp->data == &data)
             {
-                ret = dlist_new();
-                ret = dlist_append(ret, data);
+                ret = LIST_STRUCT_LOWER_new();
+                ret = LIST_STRUCT_LOWER_append(ret, data);
                 found = 1;
             }
             else
@@ -339,9 +345,9 @@ Dlist *dlist_find(Dlist *p_list, RW_STRUCT data)
 }
 
 //Return all choosen items to a new list
-Dlist *dlist_find_all(Dlist *p_list, RW_STRUCT data)
+LIST_STRUCT *LIST_STRUCT_LOWER_find_all(LIST_STRUCT *p_list, RW_STRUCT data)
 {
-    Dlist *ret = NULL;
+    LIST_STRUCT *ret = NULL;
     if (p_list != NULL)
     {
         struct node *p_temp = p_list->p_head;
@@ -351,9 +357,9 @@ Dlist *dlist_find_all(Dlist *p_list, RW_STRUCT data)
             {
                 if (ret == NULL)
                 {
-                    ret = dlist_new();
+                    ret = LIST_STRUCT_LOWER_new();
                 }
-                ret = dlist_append(ret, data);
+                ret = LIST_STRUCT_LOWER_append(ret, data);
             }
             p_temp = p_temp->p_next;
         }
@@ -363,7 +369,7 @@ Dlist *dlist_find_all(Dlist *p_list, RW_STRUCT data)
 
 //region saving/loading
 //Write the whole list in a file
-void writeToFile(Dlist *p_list){
+void writeToFile(LIST_STRUCT *p_list){
     FILE *fptr;
     fptr=fopen("./list.txt","w+");
 
@@ -383,8 +389,8 @@ void writeToFile(Dlist *p_list){
 }
 
 //Read a list of structure to display it
-Dlist* readFromFile(){
-    Dlist *p_list = dlist_new();
+LIST_STRUCT* readFromFile(){
+    LIST_STRUCT *p_list = LIST_STRUCT_LOWER_new();
     RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
     FILE *fptr;
 
@@ -395,7 +401,7 @@ Dlist* readFromFile(){
 
         /* Attempt to read element one by one */
         while (fread(data,sizeof(RW_STRUCT),1,fptr) == 1) {
-            dlist_append(p_list, *Student_ctor(STRUCT_ATTRIBUTS));
+            LIST_STRUCT_LOWER_append(p_list, *Student_ctor(STRUCT_ATTRIBUTS));
         }
         printf("\n");
     }
@@ -410,89 +416,29 @@ Dlist* readFromFile(){
 
 int main()
 {
-    Dlist* myList = dlist_new();
+    LIST_STRUCT* myList = LIST_STRUCT_LOWER_new();
 
+    //Create list items
     RW_STRUCT myItem = *Student_ctor(1,"roger",10);
+    LIST_STRUCT_LOWER_append(myList,myItem);
 
-    dlist_append(myList,myItem);
-    dlist_append(myList,*Student_ctor(2,"ivan",12));
-    dlist_append(myList,*Student_ctor(3,"igor",6));
-    printf("List size :%d\n",dlist_length(myList));
-    dlist_display(myList);
+    LIST_STRUCT_LOWER_append(myList,*Student_ctor(2,"ivan",12));
+    LIST_STRUCT_LOWER_append(myList,*Student_ctor(3,"igor",6));
+    LIST_STRUCT_LOWER_insert(myList,*Student_ctor(4,"ivon",16),1);
+    LIST_STRUCT_LOWER_display(myList);
 
-    dlist_insert(myList,*Student_ctor(4,"ivon",16),1);
-    dlist_display(myList);
+    printf("List size :%d\n",LIST_STRUCT_LOWER_length(myList));
 
-    /*dlist_insert(myList,32,4);
-    dlist_display(myList);
-
-    dlist_insert(myList,22,1);
-    dlist_display(myList);
-
-    dlist_insert(myList,42,4);
-    dlist_display(myList);*/
-
-    printf("List size :%d\n",dlist_length(myList));
-
-    /*dlist_delete(myList);
-    dlist_display(myList);*/
-
-    /*dlist_append(myList,101);
-    dlist_append(myList,102);
-    dlist_display(myList);
-
-    printf("List size :%d\n",dlist_length(myList));
-
-    dlist_remove(myList, 100);
-    dlist_display(myList);
-
-    printf("List size :%d\n",dlist_length(myList));
-
-    dlist_append(myList,42);
-
-    printf("List size :%d\n",dlist_length(myList));
-
-    dlist_append(myList,42);
-
-    printf("List size :%d\n",dlist_length(myList));
-
-    dlist_append(myList,42);
-    dlist_display(myList);
-
-    printf("List size :%d\n",dlist_length(myList));*/
-
-    /*dlist_remove_all(myList,42);
-    dlist_display(myList);
-
-    printf("List size :%d\n",dlist_length(myList));*/
-
-    /*dlist_remove_id(myList, 1);
-    dlist_display(myList);
-
-    printf("List size :%d\n",dlist_length(myList));
-
-    Dlist *finded = dlist_find(myList, 42);
-    dlist_display(finded);
-
-    Dlist *findedall = dlist_find_all(myList, 42);
-    dlist_display(findedall);*/
-
-    //Display head item
-    RW_STRUCT* retrieveItem = &myList->p_head->data;
-
-    printf("%d\n",retrieveItem);
-    printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
-
-    printf("Start write\n");
+    //Write Read
     writeToFile(myList);
-    printf("Start read\n");
-    Dlist *newList = readFromFile();
-    printf("Print extracted list\n");
-    dlist_display(newList);
+    LIST_STRUCT *newList = readFromFile();
+    LIST_STRUCT_LOWER_display(newList);
 
     //Display head item
-    retrieveItem = &newList->p_head->data;
+    RW_STRUCT* retrieveItem = &newList->p_head->data;
 
-    printf("%d\n",retrieveItem);
+    printf("Item pointer value : %d\n",retrieveItem);
     printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
+
+
 }
