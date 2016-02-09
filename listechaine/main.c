@@ -190,7 +190,7 @@ void LIST_STRUCT_LOWER_display(LIST_STRUCT *p_list)
 }
 
 //Remove the first item regarding the data parameter
-LIST_STRUCT *LIST_STRUCT_LOWER_remove(LIST_STRUCT *p_list, RW_STRUCT data)
+LIST_STRUCT *LIST_STRUCT_LOWER_remove(LIST_STRUCT *p_list, RW_STRUCT* data)
 {
     if (p_list != NULL)
     {
@@ -198,7 +198,54 @@ LIST_STRUCT *LIST_STRUCT_LOWER_remove(LIST_STRUCT *p_list, RW_STRUCT data)
         int found = 0;
         while (p_temp != NULL && !found)
         {
-            if (&p_temp->data == &data)
+            //TODO use struct here
+            RW_STRUCT* current_data = malloc(sizeof(RW_STRUCT));
+            current_data = &p_temp->data;
+
+            if (current_data->id == data->id && current_data->name == data->name && current_data->mark == data->mark)
+            {
+                if (p_temp->p_next == NULL)
+                {
+                    p_list->p_tail = p_temp->p_prev;
+                    p_list->p_tail->p_next = NULL;
+                }
+                else if (p_temp->p_prev == NULL)
+                {
+                    p_list->p_head = p_temp->p_next;
+                    p_list->p_head->p_prev = NULL;
+                }
+                else
+                {
+                    p_temp->p_next->p_prev = p_temp->p_prev;
+                    p_temp->p_prev->p_next = p_temp->p_next;
+                }
+                free(p_temp);
+                p_list->length--;
+                found = 1;
+            }
+            else
+            {
+                p_temp = p_temp->p_next;
+            }
+        }
+    }
+    return p_list;
+}
+
+//Remove the first item regarding the id parameter
+LIST_STRUCT *LIST_STRUCT_LOWER_remove_by_id(LIST_STRUCT *p_list, int id)
+{
+    if (p_list != NULL)
+    {
+        struct node *p_temp = p_list->p_head;
+        int found = 0;
+        while (p_temp != NULL && !found)
+        {
+            //TODO use struct here
+            RW_STRUCT* current_data = malloc(sizeof(RW_STRUCT));
+            current_data = &p_temp->data;
+
+            if (current_data->id == id)
             {
                 if (p_temp->p_next == NULL)
                 {
@@ -268,7 +315,7 @@ LIST_STRUCT *LIST_STRUCT_LOWER_remove_all(LIST_STRUCT *p_list, int data)
 }
 
 //Remove item with selected position
-LIST_STRUCT *LIST_STRUCT_LOWER_remove_id(LIST_STRUCT *p_list, int position)
+LIST_STRUCT *LIST_STRUCT_LOWER_remove_position(LIST_STRUCT *p_list, int position)
 {
     if (p_list != NULL)
     {
@@ -477,4 +524,11 @@ int main()
 
     LIST_STRUCT_LOWER_display_list_ids(LIST_STRUCT_LOWER_get_list_ids(newList));
     //Dlist2* test = dlist2_new();
+
+    printf("Remove check\n");
+    LIST_STRUCT_LOWER_remove_by_id(newList,4);
+    LIST_STRUCT_LOWER_display(newList);
+
+    /*LIST_STRUCT_LOWER_remove_position(newList,1);
+    LIST_STRUCT_LOWER_display(newList);*/
 }
