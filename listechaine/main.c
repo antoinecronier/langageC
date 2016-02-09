@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #define RW_STRUCT struct student
+
 struct student
 {
     int id;
@@ -30,6 +31,12 @@ typedef struct dlist
     struct node *p_tail;
     struct node *p_head;
 } Dlist;
+
+//Allow to display correct info of list items
+void printf_struct(RW_STRUCT* item)
+{
+    printf("%d %s %d\n",item->id, item->name, item->mark);
+}
 
 //Create a new list
 Dlist *dlist_new(void)
@@ -169,12 +176,12 @@ void dlist_display(Dlist *p_list)
         struct node *p_temp = p_list->p_head;
         while (p_temp != NULL)
         {
-            printf("%d -> ", p_temp->data);
+            printf_struct(&p_temp->data);
             fflush(stdout);
             p_temp = p_temp->p_next;
         }
     }
-    printf("NULL\n");
+    printf("\n");
 }
 
 //Remove the first item regarding the data parameter
@@ -359,16 +366,14 @@ void writeToFile(Dlist *p_list){
     FILE *fptr;
     fptr=fopen("./list.txt","w+");
 
-    RW_STRUCT* data;
+    RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
     if (p_list != NULL)
     {
         struct node *p_temp = p_list->p_head;
         while (p_temp != NULL)
         {
             data = &p_temp->data;
-            printf("%d -> ", *data);
-            //fprintf(fptr,"%d\n",p_temp->data);
-            fwrite(&data,sizeof(data),1,fptr);
+            fwrite(data,sizeof(RW_STRUCT),1,fptr);
             p_temp = p_temp->p_next;
         }
         printf("\n");
@@ -378,20 +383,17 @@ void writeToFile(Dlist *p_list){
 
 Dlist* readFromFile(){
     Dlist *p_list = dlist_new();
-    RW_STRUCT data[1];
+    RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
     FILE *fptr;
 
-    fptr=fopen("./list.txt","rb");
+    fptr=fopen("./list.txt","r");
 
     if (fptr) {
         /* File was opened successfully. */
 
         /* Attempt to read element one by one */
         while (fread(data,sizeof(RW_STRUCT),1,fptr) == 1) {
-
-            printf("%d -> ", data[0]);
-
-            dlist_append(p_list, data[0]);
+            dlist_append(p_list, *Student_ctor(data->id,data->name,data->mark));
         }
         printf("\n");
     }
@@ -474,7 +476,7 @@ int main()
     dlist_display(findedall);*/
 
     //Display head item
-    struct student* retrieveItem = &myList->p_head->data;
+    RW_STRUCT* retrieveItem = &myList->p_head->data;
 
     printf("%d\n",retrieveItem);
     printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
