@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "test.h"
 
 #define RW_STRUCT struct student
@@ -451,7 +452,7 @@ int* LIST_STRUCT_LOWER_get_list_ids(LIST_STRUCT *p_list)
 
 //region saving/loading
 //Write the whole list in a file
-void LIST_STRUCT_LOWER_writeToFile(LIST_STRUCT *p_list){
+void LIST_STRUCT_LOWER_writeToFileBinary(LIST_STRUCT *p_list){
     FILE *fptr;
     fptr=fopen(STRUCT_FILE,"w+");
 
@@ -470,8 +471,40 @@ void LIST_STRUCT_LOWER_writeToFile(LIST_STRUCT *p_list){
     fclose(fptr);
 }
 
+void LIST_STRUCT_LOWER_writeToFileChar(LIST_STRUCT *p_list){
+    FILE* fp = 0;
+    char* buffer = 0;
+
+    fp = fopen(STRUCT_FILE, "w");
+    fclose(fp);
+
+    /* copy the data to a string */
+    RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
+    if (p_list != NULL)
+    {
+        struct node *p_temp = p_list->p_head;
+        while (p_temp != NULL)
+        {
+            /* allocate */
+            buffer = malloc(80);
+            memset(buffer, 0, 80);
+
+            data = &p_temp->data;
+            snprintf( buffer, 80, "%d|%s|%d|\n",
+            data->id, data->name, data->mark);
+
+            fp = fopen(STRUCT_FILE, "a");
+            fputs(buffer, fp);
+            free(buffer);
+            fclose(fp);
+            p_temp = p_temp->p_next;
+        }
+        printf("\n");
+    }
+}
+
 //Read a list of structure to display it
-LIST_STRUCT* LIST_STRUCT_LOWER_readFromFile(){
+LIST_STRUCT* LIST_STRUCT_LOWER_readFromFileBinary(){
     LIST_STRUCT *p_list = LIST_STRUCT_LOWER_new();
     RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
     FILE *fptr;
@@ -492,12 +525,52 @@ LIST_STRUCT* LIST_STRUCT_LOWER_readFromFile(){
 
     return p_list;
 }
+
+LIST_STRUCT* LIST_STRUCT_LOWER_readFromFileChar(){
+
+    FILE* fp = 0;
+    char* buffer = 0;
+    char tokens[] = "|\n";
+    LIST_STRUCT *p_list = LIST_STRUCT_LOWER_new();
+    RW_STRUCT* data = malloc(sizeof(RW_STRUCT));
+
+    /* allocate */
+    buffer = malloc (80);
+    memset(buffer, 0, 80);
+
+    /* open the file in read mode */
+    fp = fopen(STRUCT_FILE, "r");
+    printf("trest1\n");
+    while(fgets(buffer, 80, fp))
+    {
+        char temp[20];
+
+        /* the line is in 'buffer', now parse it into the 'data' variable using strtok() */
+        printf("trest2\n");
+        data->id = atoi( strtok( buffer, tokens ));
+        printf("trest3 %d\n", data->id);
+        strcpy( temp, strtok( NULL, tokens ));
+        data->name = temp;
+        printf("trest4 %s\n", data->name);
+        data->mark = atoi( strtok( NULL, tokens ));
+        printf("trest5 %d\n", data->mark);
+        printf("%d %s %d\n", data->id, data->name, data->mark);
+        LIST_STRUCT_LOWER_append(p_list, *Student_ctor(STRUCT_ATTRIBUTS));
+
+        /* allocate */
+        buffer = malloc (80);
+        memset(buffer, 0, 80);
+    }
+    free( buffer );
+    return p_list;
+}
 //endregion
 
 
 
 int main()
 {
+    //region create and save
     LIST_STRUCT* myList = LIST_STRUCT_LOWER_new();
 
     //Create list items
@@ -512,8 +585,8 @@ int main()
     printf("List size :%d\n",LIST_STRUCT_LOWER_length(myList));
 
     //Write Read
-    LIST_STRUCT_LOWER_writeToFile(myList);
-    LIST_STRUCT *newList = LIST_STRUCT_LOWER_readFromFile();
+    LIST_STRUCT_LOWER_writeToFileBinary(myList);
+    LIST_STRUCT *newList = LIST_STRUCT_LOWER_readFromFileBinary();
     LIST_STRUCT_LOWER_display(newList);
 
     //Display head item
@@ -523,12 +596,23 @@ int main()
     printf("%d %s %d\n",retrieveItem->id, retrieveItem->name, retrieveItem->mark);
 
     LIST_STRUCT_LOWER_display_list_ids(LIST_STRUCT_LOWER_get_list_ids(newList));
-    //Dlist2* test = dlist2_new();
 
     printf("Remove check\n");
     LIST_STRUCT_LOWER_remove_by_id(newList,4);
     LIST_STRUCT_LOWER_display(newList);
+    //endregion
 
-    /*LIST_STRUCT_LOWER_remove_position(newList,1);
-    LIST_STRUCT_LOWER_display(newList);*/
+    //region load and print
+    LIST_STRUCT* myListLoad = LIST_STRUCT_LOWER_readFromFileBinary();
+    LIST_STRUCT_LOWER_display(myListLoad);
+    //endregion
+
+    //region char
+    LIST_STRUCT_LOWER_writeToFileChar(myList);
+
+    printf("yo\n");
+    LIST_STRUCT *newListChar = LIST_STRUCT_LOWER_readFromFileChar();
+    LIST_STRUCT_LOWER_display(newListChar);
+    printf("ya\n");
+    //endregion
 }

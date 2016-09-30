@@ -69,3 +69,73 @@
 	<stdlib.h>
 	"consoleColor.h"
 
+1453737918 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\ascii.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738028 c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\consolecolor.h
+	<windows.h>
+
+1453738046 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\asciitochar.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738052 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\basicentiercalc.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738058 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\basicrealcalc.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738064 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\calc.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738087 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\chartoascii.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738092 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\circlegeo.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453736880 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\consolecolor.c
+	<stdio.h>
+	<stdlib.h>
+	<windows.h>
+
+1453801331 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\drawcircle.c
+	<stdio.h>
+	<stdlib.h>
+
+1453738100 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\geo.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453739064 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\input.c
+	<stdio.h>
+	<stdlib.h>
+
+1453829041 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\main.c
+	<stdio.h>
+	<stdlib.h>
+
+1453991865 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\menu.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+
+1453738145 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tpx2userinteraction\squaregeo.c
+	<stdio.h>
+	<stdlib.h>
+	"consoleColor.h"
+

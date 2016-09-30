@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1455027600 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\listechaine\main.c
+1459353452 source:c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\listechaine\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	"test.h"
 
-1455023871 c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\listechaine\test.h
+1455027471 c:\users\tactfactory\documents\tactfactory\cour\imie\couritstart\langagec\src\tp\langagec\listechaine\test.h
 

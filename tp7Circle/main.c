@@ -12,9 +12,9 @@ void drawCircle(int width){
         for(i = 0; i < width / 2; i++){
             for(j = 0; j <= width; j++){
                 if((j == ((width / 2) + i) || j == ((width / 2) - i))){
-                    printf ("*");
+                    printf ("* ");
                 }else{
-                    printf (" ");
+                    printf ("  ");
                 }
             }
             printf ("\n");
@@ -22,18 +22,18 @@ void drawCircle(int width){
         for(i = width / 2; i > 0; i--){
             for(j = 0; j <= width; j++){
                 if((j == ((width / 2) + i) || j == ((width / 2) - i))){
-                    printf ("*");
+                    printf ("* ");
                 }else{
-                    printf (" ");
+                    printf ("  ");
                 }
             }
             printf ("\n");
         }
         for(j = 0; j <= width; j++){
             if(j == ((width / 2) + i)){
-                printf ("*");
+                printf ("* ");
             }else{
-                printf (" ");
+                printf ("  ");
             }
         }
         printf ("\n");
@@ -41,10 +41,10 @@ void drawCircle(int width){
         for(i = 0; i < width / 2; i++){
             for(j = 0; j <= width; j++){
                 if((j == ((width / 2) + i + 1) || j == ((width / 2) - i))){
-                    printf ("*");
+                    printf ("* ");
                 }
                 else{
-                    printf (" ");
+                    printf ("  ");
                 }
             }
             printf ("\n");
@@ -52,19 +52,19 @@ void drawCircle(int width){
         for(i = width / 2; i > 0; i--){
             for(j = 0; j <= width; j++){
                 if((j == ((width / 2) + i + 1) || j == ((width / 2) - i))){
-                    printf ("*");
+                    printf ("* ");
                 }
                 else{
-                    printf (" ");
+                    printf ("  ");
                 }
             }
             printf ("\n");
         }
         for(j = 0; j <= width; j++){
             if((j == ((width / 2) + i) || j == ((width / 2) - i + 1))){
-                printf ("*");
+                printf ("* ");
             }else{
-                printf (" ");
+                printf ("  ");
             }
         }
         printf ("\n");
@@ -92,9 +92,11 @@ int mathInputInt(){
 
 int main()
 {
-    int value = 0;
-    printf("What is the radius of your circle ? : ");
-    value = mathInputInt();
-    drawCircle(value);
+    while(1){
+        int value = 0;
+        printf("What is the radius of your circle ? : ");
+        value = mathInputInt();
+        drawCircle(value);
+    }
     return 0;
 }

@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1475073372 source:c:\users\tactfactory\documents\tactfactory\cour\imie\cour\langagec\src\tp\langagec\tp7circle\main.c
+	<stdio.h>
+	<stdlib.h>
+
